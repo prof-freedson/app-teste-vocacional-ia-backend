@@ -9,7 +9,11 @@ const app = Fastify({
 });
 
 await app.register(cors, {
-  origin: "*",
+  origin: [
+    "http://localhost:3001",
+    "https://app-teste-vocacional-ia-frontend.vercel.app"
+  ],
+  credentials: true,
   methods: ["GET", "POST"],
 });
 
