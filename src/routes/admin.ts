@@ -497,13 +497,27 @@ export async function adminRoutes(app: FastifyInstance) {
     try {
       const { number, enabled = true } = request.body as { number: string; enabled?: boolean };
       
-      // Validação básica do formato do número (aceita celular e fixo)
-      const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
-      if (!phoneRegex.test(number)) {
+      // Validar formato do número tradicional (aceita celular e fixo)
+      const validatePhoneNumber = (phoneNumber: string): boolean => {
+        const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+        return phoneRegex.test(phoneNumber);
+      };
+
+      // Validar formato do link WhatsApp
+      const validateWhatsAppLink = (link: string): boolean => {
+        const linkRegex = /^https:\/\/wa\.me\/\d{10,15}$/;
+        return linkRegex.test(link);
+      };
+
+      // Verificar se é um formato válido (número tradicional ou link)
+      const isValidPhone = validatePhoneNumber(number);
+      const isValidLink = validateWhatsAppLink(number);
+
+      if (!isValidPhone && !isValidLink) {
         reply.status(400);
         return {
           success: false,
-          error: "Formato de número inválido. Use o formato: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
+          error: "Formato inválido. Use (XX) XXXXX-XXXX, (XX) XXXX-XXXX ou https://wa.me/559831981530"
         };
       }
       
