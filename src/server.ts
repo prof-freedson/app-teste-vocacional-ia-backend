@@ -28,19 +28,28 @@ app.register(planRoutes);
 app.register(agentRoutes);
 app.register(adminRoutes);
 
-app
-  .listen({ port: Number(process.env.PORT) || 3333, host: "0.0.0.0" })
-  .then(() => {
-    console.log("🚀 Server is running on port 3333");
-    console.log("📚 Agentes especializados disponíveis:");
-    console.log("   - POST /agents/questions - Geração de perguntas");
-    console.log("   - POST /agents/analysis - Análise vocacional");
-    console.log("   - POST /agents/courses - Recomendação de cursos");
-    console.log("   - POST /agents/whatsapp - Formatação WhatsApp");
-    console.log("   - POST /agents/workflow - Workflow completo");
-    console.log("   - GET  /agents/health - Status dos agentes");
-  })
-  .catch((err) => {
-    app.log.error(err);
-    process.exit(1);
-  });
+// Export the app for Vercel
+export default async function handler(req: any, res: any) {
+  await app.ready();
+  app.server.emit('request', req, res);
+}
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app
+    .listen({ port: Number(process.env.PORT) || 3333, host: "0.0.0.0" })
+    .then(() => {
+      console.log("🚀 Server is running on port 3333");
+      console.log("📚 Agentes especializados disponíveis:");
+      console.log("   - POST /agents/questions - Geração de perguntas");
+      console.log("   - POST /agents/analysis - Análise vocacional");
+      console.log("   - POST /agents/courses - Recomendação de cursos");
+      console.log("   - POST /agents/whatsapp - Formatação WhatsApp");
+      console.log("   - POST /agents/workflow - Workflow completo");
+      console.log("   - GET  /agents/health - Status dos agentes");
+    })
+    .catch((err) => {
+      app.log.error(err);
+      process.exit(1);
+    });
+}
