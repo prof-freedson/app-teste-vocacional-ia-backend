@@ -1,6 +1,6 @@
 [
   {
-    "id": "85t8kgghqmg9pbbc0",
+    "id": "eewwcwmw28",
     "nome": "Assistente Administrativo",
     "area": "Administração",
     "descricao": "Curso de Assistente Administrativo com carga horária de 160 horas.",
@@ -8,11 +8,11 @@
     "modalidade": "presencial",
     "duracao": "160h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.163Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "6onkgs5t1mg9pbbc1",
+    "id": "1ef1zqk8q1b",
     "nome": "Assistente Financeiro",
     "area": "Administração",
     "descricao": "Curso de Assistente Financeiro com carga horária de 160 horas.",
@@ -20,11 +20,11 @@
     "modalidade": "presencial",
     "duracao": "160h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "ebq6qolwwmg9pbbc1",
+    "id": "h75b8ptyyxc",
     "nome": "Atendimento humanizado em serviços de saúde",
     "area": "Saúde",
     "descricao": "Curso de Atendimento humanizado em serviços de saúde com carga horária de 24 horas.",
@@ -32,11 +32,11 @@
     "modalidade": "presencial",
     "duracao": "24h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "at8h5tnjamg9pbbc1",
+    "id": "2trmmy0uei5",
     "nome": "Barbeiro",
     "area": "Beleza e Estética",
     "descricao": "Curso de Barbeiro com carga horária de 172 horas.",
@@ -44,11 +44,11 @@
     "modalidade": "presencial",
     "duracao": "172h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "qw4bugi5tmg9pbbc1",
+    "id": "5san4l69xo6",
     "nome": "Básico de Depilação",
     "area": "Beleza e Estética",
     "descricao": "Curso de Básico de Depilação com carga horária de 40 horas.",
@@ -56,11 +56,11 @@
     "modalidade": "presencial",
     "duracao": "40h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "0b3qf3tcsmg9pbbc1",
+    "id": "pwwaqvk9c",
     "nome": "Costureiro",
     "area": "Moda e Vestuário",
     "descricao": "Curso de Costureiro com carga horária de 212 horas.",
@@ -68,11 +68,11 @@
     "modalidade": "presencial",
     "duracao": "212h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "52gu1cs66mg9pbbc1",
+    "id": "dcap85ffxkl",
     "nome": "Cuidador de Idoso",
     "area": "Saúde",
     "descricao": "Curso de Cuidador de Idoso com carga horária de 160 horas.",
@@ -80,11 +80,11 @@
     "modalidade": "presencial",
     "duracao": "160h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "cccqm3dnrmg9pbbc1",
+    "id": "iuzuzeeb6g",
     "nome": "Instrumentação Cirurgica",
     "area": "Saúde",
     "descricao": "Curso de Instrumentação Cirurgica com carga horária de 40 horas.",
@@ -92,11 +92,11 @@
     "modalidade": "presencial",
     "duracao": "40h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "p0b3k2z8lmg9pbbc1",
+    "id": "wtfnrxiwqyb",
     "nome": "Introdução à Fotografia Digital",
     "area": "Fotografia",
     "descricao": "Curso de Introdução à Fotografia Digital com carga horária de 30 horas.",
@@ -104,23 +104,23 @@
     "modalidade": "presencial",
     "duracao": "30h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "rkg1wv9y1mg9pbbc1",
+    "id": "vbgvzqhym0d",
     "nome": "Modelagem e Costura Para Iniciantes",
     "area": "Moda e Vestuário",
     "descricao": "Curso de Modelagem e Costura Para Iniciantes com carga horária de 60 horas.",
-    "nivel": "basico",
+    "nivel": "intermediario",
     "modalidade": "presencial",
     "duracao": "60h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "gyg8bnkulmg9pbbc1",
+    "id": "fcqaeui564h",
     "nome": "Oratória: comunicação e técnicas de apresentação",
     "area": "Comunicação",
     "descricao": "Curso de Oratória: comunicação e técnicas de apresentação com carga horária de 20 horas.",
@@ -128,11 +128,11 @@
     "modalidade": "presencial",
     "duracao": "20h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "dxyqplxiemg9pbbc1",
+    "id": "78caul3r4ip",
     "nome": "Oratória Avançada",
     "area": "Comunicação",
     "descricao": "Curso de Oratória Avançada com carga horária de 30 horas.",
@@ -140,11 +140,11 @@
     "modalidade": "presencial",
     "duracao": "30h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "x4ruwd5e2mg9pbbc1",
+    "id": "e78z5j1gwhk",
     "nome": "Penteados Estilizados",
     "area": "Beleza e Estética",
     "descricao": "Curso de Penteados Estilizados com carga horária de 20 horas.",
@@ -152,11 +152,11 @@
     "modalidade": "presencial",
     "duracao": "20h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "llym6jnpomg9pbbc1",
+    "id": "mraldm0tpks",
     "nome": "Tendências em Automaquiagem",
     "area": "Beleza e Estética",
     "descricao": "Curso de Tendências em Automaquiagem com carga horária de 15 horas.",
@@ -164,11 +164,11 @@
     "modalidade": "presencial",
     "duracao": "15h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "4baww92gmmg9pbbc1",
+    "id": "zuro776u6bs",
     "nome": "Administrador de Banco de Dados",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Administrador de Banco de Dados com carga horária de 200 horas.",
@@ -176,23 +176,23 @@
     "modalidade": "presencial",
     "duracao": "200h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "g83967j3vmg9pbbc1",
+    "id": "kv7jmfmx48n",
     "nome": "Assistente de Tecnologias da Informação",
-    "area": "Administração",
+    "area": "Tecnologia da Informação",
     "descricao": "Curso de Assistente de Tecnologias da Informação com carga horária de 200 horas.",
     "nivel": "avancado",
     "modalidade": "presencial",
     "duracao": "200h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "8vr99go0mmg9pbbc1",
+    "id": "xf5ke2narjo",
     "nome": "Autocad: Projetos 2d",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Autocad: Projetos 2d com carga horária de 60 horas.",
@@ -200,11 +200,11 @@
     "modalidade": "presencial",
     "duracao": "60h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "wfrevt6c0mg9pbbc1",
+    "id": "jkkyhwt52c",
     "nome": "Autodesk Revit",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Autodesk Revit com carga horária de 40 horas.",
@@ -212,11 +212,11 @@
     "modalidade": "presencial",
     "duracao": "40h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "2cgjm3wyxmg9pbbc1",
+    "id": "0k5abtrt79g9",
     "nome": "Business Intelligence com Power bi",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Business Intelligence com Power bi com carga horária de 40 horas.",
@@ -224,11 +224,11 @@
     "modalidade": "presencial",
     "duracao": "40h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "goxw43dmmmg9pbbc1",
+    "id": "c1ip26gj9k",
     "nome": "Criação de Conteúdo para Redes Sociais com Inteligência Artificial: Fotografia, Vídeo e Texto",
     "area": "Fotografia",
     "descricao": "Curso de Criação de Conteúdo para Redes Sociais com Inteligência Artificial: Fotografia, Vídeo e Texto com carga horária de 20 horas.",
@@ -236,35 +236,35 @@
     "modalidade": "presencial",
     "duracao": "20h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "dqxzvoy6lmg9pbbc1",
+    "id": "31k6suf7brs",
     "nome": "Excel Avançado",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Excel Avançado com carga horária de 60 horas.",
-    "nivel": "avancado",
+    "nivel": "intermediario",
     "modalidade": "presencial",
     "duracao": "60h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "y5qxjc2jvmg9pbbc1",
+    "id": "iun0jh7y8d8",
     "nome": "Ferramentas Adobe para Design",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Ferramentas Adobe para Design com carga horária de 144 horas.",
-    "nivel": "intermediario",
+    "nivel": "avancado",
     "modalidade": "presencial",
     "duracao": "144h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "gon9ym2pemg9pbbc1",
+    "id": "ta6yzwx0uf",
     "nome": "Formação - Programação em Python",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Formação - Programação em Python com carga horária de 156 horas.",
@@ -272,23 +272,23 @@
     "modalidade": "presencial",
     "duracao": "156h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "hamfi683smg9pbbc1",
+    "id": "47zqmmlzc75",
     "nome": "Introdução à Informática \nWindows e Office\n(Windows, Word, Excel e Power Point)",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Introdução à Informática \nWindows e Office\n(Windows, Word, Excel e Power Point) com carga horária de 80 horas.",
-    "nivel": "basico",
+    "nivel": "intermediario",
     "modalidade": "presencial",
     "duracao": "80h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "e5n91ne4mmg9pbbc1",
+    "id": "vv3xeabr8t",
     "nome": "Produtividade com Chatgpt",
     "area": "Tecnologia da Informação",
     "descricao": "Curso de Produtividade com Chatgpt com carga horária de 20 horas.",
@@ -296,11 +296,11 @@
     "modalidade": "presencial",
     "duracao": "20h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "tbk0p4hjcmg9pbbc1",
+    "id": "6v3u5uh0rtp",
     "nome": "Hambúrguer Artesanal",
     "area": "Gastronomia",
     "descricao": "Curso de Hambúrguer Artesanal com carga horária de 15 horas.",
@@ -308,11 +308,11 @@
     "modalidade": "presencial",
     "duracao": "15h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   },
   {
-    "id": "3aur9dgxbmg9pbbc1",
+    "id": "5tnqglq9zud",
     "nome": "Métodos de preparo de cafés",
     "area": "Gastronomia",
     "descricao": "Curso de Métodos de preparo de cafés com carga horária de 36 horas.",
@@ -320,7 +320,7 @@
     "modalidade": "presencial",
     "duracao": "36h",
     "ativo": true,
-    "created_at": "2025-10-02T17:40:41.377Z",
-    "updated_at": "2025-10-02T17:40:41.377Z"
+    "created_at": "2025-10-02T20:54:36.164Z",
+    "updated_at": "2025-10-02T20:54:36.164Z"
   }
 ]
