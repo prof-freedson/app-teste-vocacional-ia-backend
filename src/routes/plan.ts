@@ -6,18 +6,19 @@ export async function planRoutes(app: FastifyInstance) {
   // Nova rota para teste vocacional
   app.post("/vocational-test", async (request, reply) => {
     reply.raw.setHeader("Access-Control-Allow-Origin", "*");
-    reply.raw.setHeader("Content-Type", "text/plain; charset=utf-8");
-
     reply.raw.setHeader("Content-Type", "text/event-stream");
     reply.raw.setHeader("Cache-Control", "no-cache");
     reply.raw.setHeader("Connection", "keep-alive");
 
     const parse = VocationalTestRequestSchema.safeParse(request.body);
     if (!parse.success) {
-      return reply.status(400).send({
+      const errorMessage = JSON.stringify({
         error: "ValidationError",
         details: parse.error.flatten((issue) => issue.message),
       });
+      reply.raw.write(`data: ${errorMessage}\n\n`);
+      reply.raw.end();
+      return reply;
     }
 
     try {
@@ -28,7 +29,8 @@ export async function planRoutes(app: FastifyInstance) {
       reply.raw.end();
     } catch (err: any) {
       request.log.error(err);
-      reply.raw.write(`event: error\n ${JSON.stringify(err.message)}`);
+      const errorMessage = JSON.stringify({ error: err.message });
+      reply.raw.write(`data: ${errorMessage}\n\n`);
       reply.raw.end();
     }
 

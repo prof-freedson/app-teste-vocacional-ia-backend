@@ -15,7 +15,8 @@ async function createApp() {
 
   await app.register(cors, {
     origin: [
-      "http://localhost:3001",
+      "http://localhost:3000",
+      "http://localhost:3001", 
       "https://app-teste-vocacional-ia-frontend.vercel.app"
     ],
     credentials: true,

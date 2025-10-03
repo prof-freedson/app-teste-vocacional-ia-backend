@@ -6,13 +6,15 @@ import {
   buildUserPrompt,
 } from "./prompt";
 import type { VocationalTestRequest, DietPlanRequest } from "./types";
+
+// Importação direta dos agentes
 import { 
   vocationalOrchestrator, 
   analysisAgent, 
   courseAgent, 
   whatsAppAgent,
   AgentLogger 
-} from "./agents";
+} from "./agents/index.js";
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
@@ -28,10 +30,13 @@ export async function* generateVocationalAnalysis(input: VocationalTestRequest) 
   const startTime = Date.now();
   
   try {
+    console.log('🚀 Iniciando generateVocationalAnalysis com agentes especializados...');
     AgentLogger.logAgentCall('VocationalOrchestrator', 'executeFullWorkflow', 0);
     
     // Executa o workflow completo usando os agentes especializados
+    console.log('📞 Chamando vocationalOrchestrator.executeFullWorkflow...');
     const workflow = await vocationalOrchestrator.executeFullWorkflow(input);
+    console.log('✅ Workflow executado com sucesso:', workflow);
     
     // Converte o resultado para formato de streaming para manter compatibilidade
     const result = {
@@ -44,6 +49,8 @@ export async function* generateVocationalAnalysis(input: VocationalTestRequest) 
         processingTime: Date.now() - startTime
       }
     };
+    
+    console.log('📦 Resultado formatado para streaming:', Object.keys(result));
     
     // Simula streaming enviando o resultado em chunks
     const resultString = JSON.stringify(result, null, 2);
@@ -59,6 +66,8 @@ export async function* generateVocationalAnalysis(input: VocationalTestRequest) 
     AgentLogger.logSuccess('VocationalOrchestrator', 'executeFullWorkflow', result);
     
   } catch (error) {
+    console.error('❌ ERRO nos agentes especializados:', error);
+    console.error('📍 Stack trace:', (error as Error).stack);
     AgentLogger.logError('VocationalOrchestrator', 'executeFullWorkflow', error);
     
     // Fallback para o sistema antigo em caso de erro

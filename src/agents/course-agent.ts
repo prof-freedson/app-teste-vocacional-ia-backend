@@ -27,13 +27,37 @@ export class CourseAgent {
    */
   private async loadCurrentProgramCourses(): Promise<CurrentProgramCourse[]> {
     try {
+      // Caminho correto para o arquivo na raiz do projeto
       const currentProgramPath = path.join(process.cwd(), "..", "PROGRAMAÇÃO- out-nov-dez-final.json");
-      const data = await fs.readFile(currentProgramPath, "utf-8");
+      console.log("🔍 Tentando carregar cursos atuais de:", currentProgramPath);
+      
+      // Tentar primeiro o caminho relativo ao backend
+      let data: string;
+      try {
+        data = await fs.readFile(currentProgramPath, "utf-8");
+      } catch (error) {
+        // Se não encontrar, tentar o caminho absoluto
+        const absolutePath = "C:\\Users\\freed\\OneDrive\\Documentos\\app-teste-vocacional-ia\\PROGRAMAÇÃO- out-nov-dez-final.json";
+        console.log("🔍 Tentando caminho absoluto:", absolutePath);
+        data = await fs.readFile(absolutePath, "utf-8");
+      }
+      
       const courses = JSON.parse(data) as CurrentProgramCourse[];
+      
       // Filtrar cursos válidos (que têm nome da turma)
-      return courses.filter(course => course.Turma && course.Turma.trim() !== "");
+      const validCourses = courses.filter(course => 
+        course.Turma && 
+        course.Turma.trim() !== "" && 
+        course["C. H."] && 
+        course["C. H."] > 0
+      );
+      
+      console.log(`✅ Cursos da programação atual carregados: ${validCourses.length} cursos válidos`);
+      console.log("📋 Cursos carregados:", validCourses.map(c => c.Turma).join(", "));
+      
+      return validCourses;
     } catch (error) {
-      console.warn("Arquivo de programação atual não encontrado, usando apenas cursos genéricos:", error);
+      console.warn("⚠️ Arquivo de programação atual não encontrado, usando apenas cursos genéricos:", error);
       return [];
     }
   }
@@ -59,7 +83,7 @@ export class CourseAgent {
     // PRIORIDADE 1: Cursos da programação atual (out-nov-dez)
     if (currentProgramCourses.length > 0) {
       coursesText += "=== CURSOS DA PROGRAMAÇÃO ATUAL (PRIORIDADE MÁXIMA) ===\n";
-      coursesText += "Estes cursos estão sendo oferecidos AGORA e devem ser priorizados:\n\n";
+      coursesText += "Estes cursos estão sendo oferecidos AGORA (out-nov-dez 2024) e DEVEM SER PRIORIZADOS:\n\n";
       
       // Agrupar cursos atuais por área estimada
       const currentCoursesByArea = this.groupCurrentCoursesByArea(currentProgramCourses);
@@ -67,12 +91,14 @@ export class CourseAgent {
       for (const [area, areaCourses] of Object.entries(currentCoursesByArea)) {
         coursesText += `${area.toUpperCase()}:\n`;
         areaCourses.forEach(course => {
-          coursesText += `- ${course.Turma} (${course["C. H."]}h)\n`;
+          coursesText += `- ${course.Turma} (${course["C. H."]}h) [DISPONÍVEL AGORA]\n`;
         });
         coursesText += '\n';
       }
       
-      coursesText += "=== CURSOS GENÉRICOS (usar apenas se não houver correspondência acima) ===\n";
+      coursesText += "=== CURSOS GENÉRICOS (usar APENAS se não houver correspondência acima) ===\n";
+    } else {
+      coursesText += "ATENÇÃO: Cursos da programação atual não foram carregados. Usando apenas cursos genéricos.\n\n";
     }
     
     // PRIORIDADE 2: Cursos genéricos do sistema administrativo
@@ -106,16 +132,26 @@ export class CourseAgent {
     ${coursesText}
     
     INSTRUÇÕES IMPORTANTES:
-    1. SEMPRE PRIORIZE os cursos da "PROGRAMAÇÃO ATUAL" - estes estão sendo oferecidos AGORA
+    1. SEMPRE PRIORIZE os cursos da "PROGRAMAÇÃO ATUAL" - estes estão sendo oferecidos AGORA (out-nov-dez 2024)
     2. Use cursos genéricos APENAS quando não houver correspondência na programação atual
-    3. Analise o perfil vocacional e as preferências do usuário
-    4. Recomende cursos que se alinhem com seus interesses e objetivos
-    5. Considere a escolaridade, experiência e disponibilidade
-    6. Sugira uma progressão lógica de cursos (básico → intermediário → avançado)
-    7. Explique por que cada curso é adequado para o perfil
-    8. Mencione oportunidades de carreira e mercado de trabalho
-    9. Seja específico sobre os benefícios de cada curso
-    10. Considere a carga horária dos cursos atuais
+    3. SEMPRE RECOMENDE PELO MENOS 2-3 CURSOS - nunca deixe o usuário sem recomendações
+    4. Se não houver cursos da programação atual compatíveis, use os cursos genéricos como alternativa
+    5. Analise o perfil vocacional e as preferências do usuário
+    6. Recomende cursos que se alinhem com seus interesses e objetivos
+    7. Considere a escolaridade, experiência e disponibilidade
+    8. Sugira uma progressão lógica de cursos (básico → intermediário → avançado)
+    9. Explique por que cada curso é adequado para o perfil
+    10. Mencione oportunidades de carreira e mercado de trabalho
+    11. Seja específico sobre os benefícios de cada curso
+    12. Considere a carga horária dos cursos atuais
+    13. SEMPRE marque "programacao_atual": true para cursos da programação atual
+    14. SEMPRE marque "programacao_atual": false para cursos genéricos
+    
+    ESTRATÉGIA DE FALLBACK:
+    - Se não encontrar cursos da programação atual compatíveis com o perfil exato, procure por cursos relacionados
+    - Se ainda assim não encontrar, use cursos genéricos da mesma área de interesse
+    - Como último recurso, recomende cursos genéricos que desenvolvam habilidades transferíveis
+    - NUNCA retorne uma resposta vazia - sempre forneça pelo menos 2 recomendações
     
     FORMATO DE RESPOSTA:
     - Liste 3-5 cursos recomendados (priorizando os da programação atual)
@@ -212,8 +248,20 @@ export class CourseAgent {
     }
 
     try {
-      return JSON.parse(content);
+      // Log da resposta para debug
+      console.log('🔍 [CourseAgent] Resposta da OpenAI:', content);
+      
+      // Tentar extrair JSON se estiver dentro de markdown
+      let jsonContent = content;
+      const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
+      if (jsonMatch && jsonMatch[1]) {
+        jsonContent = jsonMatch[1];
+      }
+      
+      return JSON.parse(jsonContent);
     } catch (error) {
+      console.error('❌ [CourseAgent] Erro ao parsear JSON:', error);
+      console.error('📄 [CourseAgent] Conteúdo recebido:', content);
       throw new Error("Resposta inválida do agente de cursos");
     }
   }
@@ -403,6 +451,19 @@ export class CourseAgent {
       - Habilidades: ${userRequest.habilidades.join(', ')}
       - Personalidade: ${userRequest.personalidade}
       - Objetivos: ${userRequest.objetivos}
+      
+      INSTRUÇÕES CRÍTICAS:
+      1. SEMPRE PRIORIZE os cursos da "PROGRAMAÇÃO ATUAL" (out-nov-dez 2024) - estes estão DISPONÍVEIS AGORA
+      2. Analise CUIDADOSAMENTE a compatibilidade entre o perfil do usuário e os cursos disponíveis
+      3. Se houver cursos da programação atual compatíveis, RECOMENDE-OS PRIMEIRO
+      4. Use cursos genéricos APENAS se não houver correspondência na programação atual
+      5. SEMPRE marque "programacao_atual": true para cursos da programação atual
+      6. SEMPRE marque "programacao_atual": false para cursos genéricos
+      7. Seja ESPECÍFICO sobre por que cada curso é adequado para o perfil
+      8. Considere a área de interesse, habilidades, personalidade e objetivos do usuário
+      
+      IMPORTANTE: O usuário deve receber recomendações concretas e aplicáveis. 
+      Não deixe de recomendar cursos - sempre encontre pelo menos 2-3 opções adequadas.
       
       Crie recomendações personalizadas e justificadas para este perfil.
     `;

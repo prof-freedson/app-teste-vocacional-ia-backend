@@ -1,18 +1,15 @@
 import OpenAI from "openai";
 import fs from "fs";
-import type { VocationalTestRequest } from "../types";
-
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY as string,
-  timeout: 2 * 60 * 1000, // 2 minutos
+    apiKey: process.env.OPENAI_API_KEY,
+    timeout: 2 * 60 * 1000, // 2 minutos
 });
-
 /**
  * Agente especializado em análise vocacional
  * Responsável por interpretar respostas e determinar perfil vocacional
  */
 export class AnalysisAgent {
-  private systemPrompt = `
+    systemPrompt = `
     Você é um psicólogo vocacional especialista em análise de perfis profissionais.
     Sua função é analisar respostas de testes vocacionais e determinar vocações.
     
@@ -80,54 +77,48 @@ export class AnalysisAgent {
       "confianca_analise": numero_0_a_100
     }
   `;
-
-  /**
-   * Analisa o perfil vocacional completo do usuário
-   */
-  async analyzeVocationalProfile(request: VocationalTestRequest): Promise<any> {
-    const diretrizes = this.loadGuidelines();
-    const userPrompt = this.buildAnalysisPrompt(request);
-
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: this.systemPrompt },
-        { role: "system", content: `Diretrizes técnicas: ${diretrizes}` },
-        { role: "user", content: userPrompt }
-      ],
-      temperature: 0.3, // Baixa temperatura para análise mais consistente
-      max_tokens: 2000,
-    });
-
-    const content = response.choices[0]?.message?.content;
-    if (!content) {
-      throw new Error("Falha ao gerar análise vocacional");
+    /**
+     * Analisa o perfil vocacional completo do usuário
+     */
+    async analyzeVocationalProfile(request) {
+        const diretrizes = this.loadGuidelines();
+        const userPrompt = this.buildAnalysisPrompt(request);
+        const response = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: this.systemPrompt },
+                { role: "system", content: `Diretrizes técnicas: ${diretrizes}` },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.3, // Baixa temperatura para análise mais consistente
+            max_tokens: 2000,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+            throw new Error("Falha ao gerar análise vocacional");
+        }
+        try {
+            // Log da resposta para debug
+            console.log('🔍 [AnalysisAgent] Resposta da OpenAI:', content);
+            // Tentar extrair JSON se estiver dentro de markdown
+            let jsonContent = content;
+            const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
+            if (jsonMatch && jsonMatch[1]) {
+                jsonContent = jsonMatch[1];
+            }
+            return JSON.parse(jsonContent);
+        }
+        catch (error) {
+            console.error('❌ [AnalysisAgent] Erro ao parsear JSON:', error);
+            console.error('📄 [AnalysisAgent] Conteúdo recebido:', content);
+            throw new Error("Resposta inválida do agente de análise");
+        }
     }
-
-    try {
-      // Log da resposta para debug
-      console.log('🔍 [AnalysisAgent] Resposta da OpenAI:', content);
-      
-      // Tentar extrair JSON se estiver dentro de markdown
-      let jsonContent = content;
-      const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
-      if (jsonMatch && jsonMatch[1]) {
-        jsonContent = jsonMatch[1];
-      }
-      
-      return JSON.parse(jsonContent);
-    } catch (error) {
-      console.error('❌ [AnalysisAgent] Erro ao parsear JSON:', error);
-      console.error('📄 [AnalysisAgent] Conteúdo recebido:', content);
-      throw new Error("Resposta inválida do agente de análise");
-    }
-  }
-
-  /**
-   * Analisa apenas as respostas do teste para identificar padrões
-   */
-  async analyzeTestResponses(responses: Record<string, any>): Promise<any> {
-    const prompt = `
+    /**
+     * Analisa apenas as respostas do teste para identificar padrões
+     */
+    async analyzeTestResponses(responses) {
+        const prompt = `
       Analise apenas as respostas do teste vocacional e identifique padrões:
       
       RESPOSTAS: ${JSON.stringify(responses)}
@@ -141,37 +132,31 @@ export class AnalysisAgent {
       
       Retorne a análise em formato JSON estruturado.
     `;
-
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: this.systemPrompt },
-        { role: "user", content: prompt }
-      ],
-      temperature: 0.3,
-      max_tokens: 1000,
-    });
-
-    const content = response.choices[0]?.message?.content;
-    if (!content) {
-      throw new Error("Falha ao analisar respostas do teste");
+        const response = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: this.systemPrompt },
+                { role: "user", content: prompt }
+            ],
+            temperature: 0.3,
+            max_tokens: 1000,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+            throw new Error("Falha ao analisar respostas do teste");
+        }
+        try {
+            return JSON.parse(content);
+        }
+        catch (error) {
+            throw new Error("Resposta inválida na análise de respostas");
+        }
     }
-
-    try {
-      return JSON.parse(content);
-    } catch (error) {
-      throw new Error("Resposta inválida na análise de respostas");
-    }
-  }
-
-  /**
-   * Calcula compatibilidade com áreas específicas
-   */
-  async calculateAreaCompatibility(
-    userProfile: VocationalTestRequest,
-    targetAreas: string[]
-  ): Promise<Record<string, number>> {
-    const prompt = `
+    /**
+     * Calcula compatibilidade com áreas específicas
+     */
+    async calculateAreaCompatibility(userProfile, targetAreas) {
+        const prompt = `
       Calcule a compatibilidade do usuário com as seguintes áreas profissionais:
       ${targetAreas.join(', ')}
       
@@ -185,34 +170,31 @@ export class AnalysisAgent {
         ...
       }
     `;
-
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: this.systemPrompt },
-        { role: "user", content: prompt }
-      ],
-      temperature: 0.2,
-      max_tokens: 500,
-    });
-
-    const content = response.choices[0]?.message?.content;
-    if (!content) {
-      throw new Error("Falha ao calcular compatibilidade");
+        const response = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: this.systemPrompt },
+                { role: "user", content: prompt }
+            ],
+            temperature: 0.2,
+            max_tokens: 500,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+            throw new Error("Falha ao calcular compatibilidade");
+        }
+        try {
+            return JSON.parse(content);
+        }
+        catch (error) {
+            throw new Error("Resposta inválida no cálculo de compatibilidade");
+        }
     }
-
-    try {
-      return JSON.parse(content);
-    } catch (error) {
-      throw new Error("Resposta inválida no cálculo de compatibilidade");
-    }
-  }
-
-  /**
-   * Identifica pontos fortes e áreas de desenvolvimento
-   */
-  async identifyStrengthsAndDevelopment(request: VocationalTestRequest): Promise<any> {
-    const prompt = `
+    /**
+     * Identifica pontos fortes e áreas de desenvolvimento
+     */
+    async identifyStrengthsAndDevelopment(request) {
+        const prompt = `
       Identifique os pontos fortes e áreas de desenvolvimento do usuário:
       
       ${this.buildProfileSummary(request)}
@@ -224,31 +206,28 @@ export class AnalysisAgent {
         "recomendacoes_crescimento": ["rec1", "rec2", "rec3"]
       }
     `;
-
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: this.systemPrompt },
-        { role: "user", content: prompt }
-      ],
-      temperature: 0.4,
-      max_tokens: 800,
-    });
-
-    const content = response.choices[0]?.message?.content;
-    if (!content) {
-      throw new Error("Falha ao identificar pontos fortes");
+        const response = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: this.systemPrompt },
+                { role: "user", content: prompt }
+            ],
+            temperature: 0.4,
+            max_tokens: 800,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+            throw new Error("Falha ao identificar pontos fortes");
+        }
+        try {
+            return JSON.parse(content);
+        }
+        catch (error) {
+            throw new Error("Resposta inválida na identificação de pontos fortes");
+        }
     }
-
-    try {
-      return JSON.parse(content);
-    } catch (error) {
-      throw new Error("Resposta inválida na identificação de pontos fortes");
-    }
-  }
-
-  private buildAnalysisPrompt(request: VocationalTestRequest): string {
-    return `
+    buildAnalysisPrompt(request) {
+        return `
       Analise o perfil vocacional completo do usuário e determine sua vocação:
       
       DADOS PESSOAIS:
@@ -269,10 +248,9 @@ export class AnalysisAgent {
       
       Faça uma análise completa e determine o perfil vocacional ideal.
     `;
-  }
-
-  private buildProfileSummary(request: VocationalTestRequest): string {
-    return `
+    }
+    buildProfileSummary(request) {
+        return `
       Perfil: ${request.nome}, ${request.idade} anos
       Escolaridade: ${request.escolaridade}
       Interesse: ${request.area_interesse}
@@ -283,16 +261,16 @@ export class AnalysisAgent {
       Disponibilidade: ${request.disponibilidade}
       Respostas: ${JSON.stringify(request.respostas_teste)}
     `;
-  }
-
-  private loadGuidelines(): string {
-    try {
-      return fs.readFileSync("knowledge/diretrizes.md", "utf-8");
-    } catch (error) {
-      console.warn("Arquivo de diretrizes não encontrado");
-      return "";
     }
-  }
+    loadGuidelines() {
+        try {
+            return fs.readFileSync("knowledge/diretrizes.md", "utf-8");
+        }
+        catch (error) {
+            console.warn("Arquivo de diretrizes não encontrado");
+            return "";
+        }
+    }
 }
-
 export const analysisAgent = new AnalysisAgent();
+//# sourceMappingURL=analysis-agent.js.map
