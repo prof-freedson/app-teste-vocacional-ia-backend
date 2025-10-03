@@ -1,14 +1,14 @@
 {
   "whatsapp": {
-    "number": "(98) 98163-8617",
+    "number": "https://wa.me/559831981530",
     "enabled": true,
-    "lastUpdated": "2025-10-02T17:52:05.019Z"
+    "lastUpdated": "2025-10-03T15:05:50.628Z"
   },
   "senac": {
     "name": "Senac Maranhão",
-    "phone": "(98) 3216-4000",
+    "phone": "(98) 31981530",
     "website": "www.ma.senac.br",
-    "email": "atendimento@ma.senac.br",
-    "address": "Rua do Egito, 251 - Centro, São Luís - MA"
+    "email": "cepsaoluis@ma.senac.br",
+    "address": "Rua do Passeio, 495 - Centro, São Luís - MA"
   }
 }
