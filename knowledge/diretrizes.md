@@ -151,13 +151,13 @@ As diretrizes abaixo devem sempre ser usadas como referência para gerar anális
 ## 8. 📞 Informações de Contato Senac Maranhão
 
 ### Contatos Principais
-- **Telefone**: (98) 3216-4000
-- **WhatsApp**: (98) 98765-4321
+- **Telefone**: (98) 31981530
+- **WhatsApp**: (98) 31981530
 - **Site**: www.ma.senac.br
-- **E-mail**: atendimento@ma.senac.br
+- **E-mail**: cepsaoluis@ma.senac.br
 
 ### Unidades
-- **São Luís Centro**: Rua do Egito, 251 - Centro
+- **Rua do Passeio, 495 - Centro, São Luís - MA
 
 ### Redes Sociais
 - **Instagram**: @senacmaranhao
