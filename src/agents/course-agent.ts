@@ -10,10 +10,34 @@ const client = new OpenAI({
 });
 
 /**
+ * Interface para cursos da programação atual do Senac
+ */
+interface CurrentProgramCourse {
+  Turma: string;
+  "C. H.": number;
+}
+
+/**
  * Agente especializado em recomendação de cursos
  * Responsável por sugerir trilhas de cursos do Senac Maranhão
  */
 export class CourseAgent {
+  /**
+   * Carrega cursos da programação atual do Senac (PROGRAMAÇÃO- out-nov-dez-final.json)
+   */
+  private async loadCurrentProgramCourses(): Promise<CurrentProgramCourse[]> {
+    try {
+      const currentProgramPath = path.join(process.cwd(), "..", "PROGRAMAÇÃO- out-nov-dez-final.json");
+      const data = await fs.readFile(currentProgramPath, "utf-8");
+      const courses = JSON.parse(data) as CurrentProgramCourse[];
+      // Filtrar cursos válidos (que têm nome da turma)
+      return courses.filter(course => course.Turma && course.Turma.trim() !== "");
+    } catch (error) {
+      console.warn("Arquivo de programação atual não encontrado, usando apenas cursos genéricos:", error);
+      return [];
+    }
+  }
+
   private async loadAvailableCourses(): Promise<Course[]> {
     try {
       const coursesPath = path.join(process.cwd(), "data", "courses.json");
@@ -27,19 +51,39 @@ export class CourseAgent {
   }
 
   private async generateSystemPrompt(): Promise<string> {
-    const courses = await this.loadAvailableCourses();
+    const currentProgramCourses = await this.loadCurrentProgramCourses();
+    const genericCourses = await this.loadAvailableCourses();
     
-    // Agrupar cursos por área
-    const coursesByArea = courses.reduce((acc, course) => {
+    let coursesText = "CURSOS DISPONÍVEIS NO SENAC MARANHÃO:\n\n";
+    
+    // PRIORIDADE 1: Cursos da programação atual (out-nov-dez)
+    if (currentProgramCourses.length > 0) {
+      coursesText += "=== CURSOS DA PROGRAMAÇÃO ATUAL (PRIORIDADE MÁXIMA) ===\n";
+      coursesText += "Estes cursos estão sendo oferecidos AGORA e devem ser priorizados:\n\n";
+      
+      // Agrupar cursos atuais por área estimada
+      const currentCoursesByArea = this.groupCurrentCoursesByArea(currentProgramCourses);
+      
+      for (const [area, areaCourses] of Object.entries(currentCoursesByArea)) {
+        coursesText += `${area.toUpperCase()}:\n`;
+        areaCourses.forEach(course => {
+          coursesText += `- ${course.Turma} (${course["C. H."]}h)\n`;
+        });
+        coursesText += '\n';
+      }
+      
+      coursesText += "=== CURSOS GENÉRICOS (usar apenas se não houver correspondência acima) ===\n";
+    }
+    
+    // PRIORIDADE 2: Cursos genéricos do sistema administrativo
+    const coursesByArea = genericCourses.reduce((acc, course) => {
       if (!acc[course.area]) {
         acc[course.area] = [];
       }
-      acc[course.area].push(course);
+      acc[course.area]!.push(course);
       return acc;
     }, {} as Record<string, Course[]>);
 
-    let coursesText = "CURSOS DISPONÍVEIS NO SENAC MARANHÃO:\n\n";
-    
     for (const [area, areaCourses] of Object.entries(coursesByArea)) {
       coursesText += `${area.toUpperCase()}:\n`;
       areaCourses.forEach(course => {
@@ -61,20 +105,20 @@ export class CourseAgent {
     
     ${coursesText}
     
-    INSTRUÇÕES:
-    1. Analise o perfil vocacional e as preferências do usuário
-    2. Recomende cursos que se alinhem com seus interesses e objetivos
-    3. Considere a escolaridade, experiência e disponibilidade
-    4. Sugira uma progressão lógica de cursos (básico → intermediário → avançado)
-    5. Explique por que cada curso é adequado para o perfil
-    6. Mencione oportunidades de carreira e mercado de trabalho
-    7. Use APENAS os cursos listados acima
-    8. Seja específico sobre os benefícios de cada curso
-    9. Considere a modalidade (presencial/online/híbrido) se disponível
-    10. Forneça informações práticas sobre duração quando disponível
+    INSTRUÇÕES IMPORTANTES:
+    1. SEMPRE PRIORIZE os cursos da "PROGRAMAÇÃO ATUAL" - estes estão sendo oferecidos AGORA
+    2. Use cursos genéricos APENAS quando não houver correspondência na programação atual
+    3. Analise o perfil vocacional e as preferências do usuário
+    4. Recomende cursos que se alinhem com seus interesses e objetivos
+    5. Considere a escolaridade, experiência e disponibilidade
+    6. Sugira uma progressão lógica de cursos (básico → intermediário → avançado)
+    7. Explique por que cada curso é adequado para o perfil
+    8. Mencione oportunidades de carreira e mercado de trabalho
+    9. Seja específico sobre os benefícios de cada curso
+    10. Considere a carga horária dos cursos atuais
     
     FORMATO DE RESPOSTA:
-    - Liste 3-5 cursos recomendados
+    - Liste 3-5 cursos recomendados (priorizando os da programação atual)
     - Para cada curso, explique: por que é adequado, benefícios, oportunidades
     - Sugira uma ordem de prioridade
     - Inclua dicas de carreira relacionadas
@@ -93,7 +137,8 @@ export class CourseAgent {
               "nivel": "basico|intermediario|avancado",
               "justificativa": "por_que_recomendado",
               "beneficios": ["beneficio1", "beneficio2"],
-              "oportunidades": ["carreira1", "carreira2"]
+              "oportunidades": ["carreira1", "carreira2"],
+              "programacao_atual": true_ou_false
             }
           ]
         }
@@ -101,6 +146,42 @@ export class CourseAgent {
       "observacoes": "comentarios_adicionais"
     }
     `;
+  }
+
+  /**
+   * Agrupa cursos atuais por área estimada baseada no nome
+   */
+  private groupCurrentCoursesByArea(courses: CurrentProgramCourse[]): Record<string, CurrentProgramCourse[]> {
+    const grouped: Record<string, CurrentProgramCourse[]> = {};
+    
+    courses.forEach(course => {
+      const courseName = course.Turma.toLowerCase();
+      let area = "Outros";
+      
+      // Classificação por palavras-chave no nome do curso
+      if (courseName.includes("administrativo") || courseName.includes("financeiro")) {
+        area = "Gestão e Negócios";
+      } else if (courseName.includes("saúde") || courseName.includes("cuidador") || courseName.includes("cirurg")) {
+        area = "Saúde";
+      } else if (courseName.includes("barbeiro") || courseName.includes("depilação") || courseName.includes("maquiagem") || courseName.includes("penteado")) {
+        area = "Beleza e Estética";
+      } else if (courseName.includes("costur") || courseName.includes("modelagem")) {
+        area = "Moda";
+      } else if (courseName.includes("fotografia") || courseName.includes("oratória")) {
+        area = "Comunicação";
+      } else if (courseName.includes("banco de dados") || courseName.includes("tecnologia") || courseName.includes("autocad") || courseName.includes("revit") || courseName.includes("power bi") || courseName.includes("excel") || courseName.includes("adobe") || courseName.includes("python") || courseName.includes("informática") || courseName.includes("chatgpt") || courseName.includes("redes sociais") || courseName.includes("inteligência artificial")) {
+        area = "Tecnologia da Informação";
+      } else if (courseName.includes("hambúrguer") || courseName.includes("café")) {
+        area = "Gastronomia";
+      }
+      
+      if (!grouped[area]) {
+        grouped[area] = [];
+      }
+      grouped[area]!.push(course);
+    });
+    
+    return grouped;
   }
 
   /**
@@ -145,6 +226,7 @@ export class CourseAgent {
     userProfile: VocationalTestRequest,
     maxCourses: number = 5
   ): Promise<any> {
+    const currentProgramCourses = await this.loadCurrentProgramCourses();
     const systemPrompt = await this.generateSystemPrompt();
     
     const prompt = `
@@ -153,7 +235,8 @@ export class CourseAgent {
       PERFIL DO USUÁRIO:
       ${this.buildUserSummary(userProfile)}
       
-      Foque apenas na área de ${area} e retorne cursos específicos do Senac Maranhão.
+      PRIORIDADE ABSOLUTA: Use PRIMEIRO os cursos da "PROGRAMAÇÃO ATUAL" que correspondam à área ${area}.
+      Use cursos genéricos APENAS se não houver cursos atuais adequados para esta área.
       
       IMPORTANTE: Retorne APENAS um JSON válido no seguinte formato:
       {
@@ -163,7 +246,9 @@ export class CourseAgent {
             "area": "Área do Curso",
             "justificativa": "Por que este curso é adequado",
             "beneficios": "Benefícios do curso",
-            "oportunidades": "Oportunidades de carreira"
+            "oportunidades": "Oportunidades de carreira",
+            "programacao_atual": true_ou_false,
+            "carga_horaria": "horas_se_disponivel"
           }
         ]
       }
@@ -257,6 +342,7 @@ export class CourseAgent {
     availability: string,
     userProfile: VocationalTestRequest
   ): Promise<any> {
+    const currentProgramCourses = await this.loadCurrentProgramCourses();
     const systemPrompt = await this.generateSystemPrompt();
     
     const prompt = `
@@ -264,13 +350,16 @@ export class CourseAgent {
       
       PERFIL: ${this.buildUserSummary(userProfile)}
       
+      PRIORIDADE: Use PRIMEIRO os cursos da "PROGRAMAÇÃO ATUAL" que se adequem à disponibilidade.
+      
       Considere:
-      - Duração dos cursos
+      - Duração dos cursos (carga horária dos cursos atuais)
       - Horários disponíveis
       - Modalidade (presencial/EAD)
       - Intensidade do curso
       
-      Priorize cursos que se adequem à disponibilidade informada.
+      Priorize cursos da programação atual que se adequem à disponibilidade informada.
+      Use cursos genéricos apenas se necessário.
     `;
 
     const response = await client.chat.completions.create({
