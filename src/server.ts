@@ -21,7 +21,13 @@ async function createApp() {
       "https://app-teste-vocacional-ia.vercel.app"
     ],
     credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  });
+
+  // Health check endpoint
+  app.get("/", async (req: any, res: any) => {
+    return { message: "API Teste Vocacional funcionando!", status: "OK", timestamp: new Date().toISOString() };
   });
 
   app.get("/teste", async (req: any, res: any) => {
@@ -40,9 +46,15 @@ async function createApp() {
 
 // Export the app for Vercel
 export default async function handler(req: any, res: any) {
-  const fastifyApp = await createApp();
-  await fastifyApp.ready();
-  fastifyApp.server.emit('request', req, res);
+  try {
+    const fastifyApp = await createApp();
+    await fastifyApp.ready();
+    fastifyApp.server.emit('request', req, res);
+  } catch (error) {
+    console.error('Erro no handler do Vercel:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ error: 'Internal Server Error', message: errorMessage });
+  }
 }
 
 // For local development

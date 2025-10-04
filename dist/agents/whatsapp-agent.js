@@ -86,24 +86,96 @@ export class WhatsAppAgent {
      * Formata resultado completo do teste vocacional para WhatsApp
      */
     async formatVocationalResult(userRequest, vocationalAnalysis, courseRecommendations) {
+        // Extrair cursos recomendados
+        let recommendedCourses = [];
+        if (courseRecommendations?.trilhas_recomendadas) {
+            // Formato novo com trilhas
+            courseRecommendations.trilhas_recomendadas.forEach((trilha) => {
+                if (trilha.cursos) {
+                    trilha.cursos.forEach((curso) => {
+                        if (curso.nome && curso.programacao_atual) {
+                            recommendedCourses.push(curso.nome);
+                        }
+                    });
+                }
+            });
+        }
+        else if (courseRecommendations?.recomendacoes) {
+            // Formato alternativo
+            courseRecommendations.recomendacoes.forEach((rec) => {
+                if (rec.nome && rec.programacao_atual) {
+                    recommendedCourses.push(rec.nome);
+                }
+            });
+        }
+        // Se não encontrou cursos da programação atual, usar todos os cursos
+        if (recommendedCourses.length === 0) {
+            if (courseRecommendations?.trilhas_recomendadas) {
+                courseRecommendations.trilhas_recomendadas.forEach((trilha) => {
+                    if (trilha.cursos) {
+                        trilha.cursos.forEach((curso) => {
+                            if (curso.nome) {
+                                recommendedCourses.push(curso.nome);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+        // Limitar a 3 cursos para a mensagem
+        recommendedCourses = recommendedCourses.slice(0, 3);
         const prompt = `
-      Formate o resultado completo do teste vocacional para WhatsApp:
+      Crie uma mensagem WhatsApp seguindo EXATAMENTE este formato:
       
-      DADOS DO USUÁRIO:
-      - Nome: ${userRequest.nome}
-      - Idade: ${userRequest.idade}
-      - Área de interesse: ${userRequest.area_interesse}
+      "Olá! Meu nome é ${userRequest.nome} e fiz o Teste Vocacional do Senac Maranhão na Expoindustria 2025.
+
+      Baseado no meu perfil, o teste indicou que tenho afinidade com os seguintes cursos:
+
+      ${recommendedCourses.map(curso => `• ${curso}`).join('\n')}
+
+      Gostaria de receber mais informações sobre esses cursos e as próximas turmas disponíveis.
+
+      Obrigado(a)!"
       
-      ANÁLISE VOCACIONAL:
-      ${JSON.stringify(vocationalAnalysis)}
+      INSTRUÇÕES IMPORTANTES:
+      1. Use EXATAMENTE o formato acima
+      2. Substitua apenas o nome (${userRequest.nome}) e os cursos recomendados
+      3. Mantenha a estrutura e texto exatos
+      4. NÃO adicione emojis, formatação extra ou informações de contato
+      5. NÃO modifique o texto padrão
+      6. Liste os cursos com bullet points (•) como mostrado
       
-      CURSOS RECOMENDADOS:
-      ${JSON.stringify(courseRecommendations)}
+      CURSOS PARA INCLUIR:
+      ${recommendedCourses.join('\n')}
       
-      Crie uma mensagem completa, atrativa e bem formatada para WhatsApp.
-      Inclua informações de contato do Senac Maranhão e call-to-action para matrícula.
+      Retorne apenas a mensagem formatada, sem JSON ou estruturas extras.
     `;
-        return await this.generateMessage(prompt, "resultado_completo");
+        const response = await client.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "system", content: "Você é um assistente que formata mensagens WhatsApp seguindo instruções exatas. Retorne apenas o texto da mensagem, sem JSON ou formatação extra." },
+                { role: "user", content: prompt }
+            ],
+            temperature: 0.1, // Baixa temperatura para seguir instruções exatamente
+            max_tokens: 500,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+            throw new Error("Falha ao gerar mensagem WhatsApp");
+        }
+        // Retornar no formato esperado pelo frontend
+        return {
+            mensagem: content.trim(),
+            caracteres: content.length,
+            preview: content.substring(0, 100),
+            elementos_visuais: {
+                emojis_usados: [],
+                formatacao: [],
+                quebras_linha: (content.match(/\n/g) || []).length
+            },
+            call_to_action: "Solicitar informações sobre cursos",
+            alternativas: []
+        };
     }
     /**
      * Cria resumo rápido dos resultados

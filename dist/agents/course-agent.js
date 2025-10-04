@@ -15,19 +15,26 @@ export class CourseAgent {
      */
     async loadCurrentProgramCourses() {
         try {
-            // Caminho correto para o arquivo na raiz do projeto
-            const currentProgramPath = path.join(process.cwd(), "..", "PROGRAMAÇÃO- out-nov-dez-final.json");
-            console.log("🔍 Tentando carregar cursos atuais de:", currentProgramPath);
-            // Tentar primeiro o caminho relativo ao backend
             let data;
             try {
-                data = await fs.readFile(currentProgramPath, "utf-8");
+                // Primeiro, tenta o arquivo no diretório data
+                const dataPath = path.join(process.cwd(), "data", "senac-courses.json");
+                console.log("🔍 Tentando caminho data:", dataPath);
+                data = await fs.readFile(dataPath, "utf-8");
             }
-            catch (error) {
-                // Se não encontrar, tentar o caminho absoluto
-                const absolutePath = "C:\\Users\\freed\\OneDrive\\Documentos\\app-teste-vocacional-ia\\PROGRAMAÇÃO- out-nov-dez-final.json";
-                console.log("🔍 Tentando caminho absoluto:", absolutePath);
-                data = await fs.readFile(absolutePath, "utf-8");
+            catch (dataError) {
+                try {
+                    // Segundo, tenta o caminho relativo
+                    const relativePath = path.join(process.cwd(), "PROGRAMAÇÃO- out-nov-dez-final.json");
+                    console.log("🔍 Tentando caminho relativo:", relativePath);
+                    data = await fs.readFile(relativePath, "utf-8");
+                }
+                catch (relativeError) {
+                    // Se falhar, tenta o caminho absoluto
+                    const absolutePath = "C:\\Users\\freed\\OneDrive\\Documentos\\app-teste-vocacional-ia\\PROGRAMAÇÃO- out-nov-dez-final.json";
+                    console.log("🔍 Tentando caminho absoluto:", absolutePath);
+                    data = await fs.readFile(absolutePath, "utf-8");
+                }
             }
             const courses = JSON.parse(data);
             // Filtrar cursos válidos (que têm nome da turma)
