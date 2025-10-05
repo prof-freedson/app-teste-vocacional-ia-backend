@@ -11,7 +11,7 @@ export declare class CourseAgent {
     private loadAvailableCourses;
     private generateSystemPrompt;
     /**
-     * Agrupa cursos atuais por área estimada baseada no nome
+     * Agrupa cursos atuais por eixo baseado no campo eixo do JSON
      */
     private groupCurrentCoursesByArea;
     /**
@@ -33,6 +33,10 @@ export declare class CourseAgent {
     private buildRecommendationPrompt;
     private buildUserSummary;
     private loadGuidelines;
+    /**
+     * Filtra e prioriza cursos específicos do Senac baseados no eixo
+     */
+    private filterCoursesByEixo;
 }
 export declare const courseAgent: CourseAgent;
 //# sourceMappingURL=course-agent.d.ts.map

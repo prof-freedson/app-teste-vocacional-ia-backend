@@ -127,9 +127,9 @@ export async function agentRoutes(fastify: FastifyInstance) {
     try {
       const userRequest = request.body as any;
       
-      AgentLogger.logAgentCall('AnalysisAgent', 'analyzeVocationalProfile', Date.now());
+      AgentLogger.logAgentCall('AnalysisAgent', 'analyzeVocationalProfileDeterministic', Date.now());
       
-      const analysis = await analysisAgent.analyzeVocationalProfile(userRequest);
+      const analysis = await analysisAgent.analyzeVocationalProfileDeterministic(userRequest);
       
       return {
         success: true,
@@ -221,7 +221,7 @@ export async function agentRoutes(fastify: FastifyInstance) {
         courses = await courseAgent.recommendCourses(vocationalProfile, userRequest);
       } else {
         // Se não tem perfil vocacional, gera um básico primeiro
-        const analysis = await analysisAgent.analyzeVocationalProfile(userRequest);
+        const analysis = await analysisAgent.analyzeVocationalProfileDeterministic(userRequest);
         courses = await courseAgent.recommendCourses(analysis, userRequest);
       }
       
@@ -334,7 +334,7 @@ export async function agentRoutes(fastify: FastifyInstance) {
         case "resultado_completo":
           if (!vocationalAnalysis || !courseRecommendations) {
             // Gera análise e cursos se não fornecidos
-            const analysis = await analysisAgent.analyzeVocationalProfile(userRequest);
+            const analysis = await analysisAgent.analyzeVocationalProfileDeterministic(userRequest);
             const courses = await courseAgent.recommendCourses(analysis, userRequest);
             message = await whatsAppAgent.formatVocationalResult(userRequest, analysis, courses);
           } else {

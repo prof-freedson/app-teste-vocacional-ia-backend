@@ -27,7 +27,11 @@ export class VocationalOrchestrator {
             console.log('📚 Gerando recomendações de cursos...');
             const { courseAgent } = await import('./course-agent');
             const courses = await courseAgent.recommendCourses(analysis, userRequest);
-            // 3. Formatação para WhatsApp
+            // 3. Geração de narrativa personalizada
+            console.log('📝 Gerando narrativa personalizada...');
+            const { narrativeAgent } = await import('./narrative-agent');
+            const personalizedNarrative = await narrativeAgent.generatePersonalizedNarrative(userRequest, analysis, courses);
+            // 4. Formatação para WhatsApp
             console.log('📱 Formatando mensagem WhatsApp...');
             const { whatsAppAgent } = await import('./whatsapp-agent');
             const whatsappMessage = await whatsAppAgent.formatVocationalResult(userRequest, analysis, courses);
@@ -38,6 +42,7 @@ export class VocationalOrchestrator {
                 data: {
                     analysis,
                     courses,
+                    personalizedNarrative,
                     whatsappMessage
                 },
                 createdAt: new Date().toISOString(),
@@ -180,6 +185,8 @@ export class VocationalOrchestrator {
 }
 // Instância singleton do orquestrador
 export const vocationalOrchestrator = new VocationalOrchestrator();
+// Exportar NarrativeAgent
+export { NarrativeAgent, narrativeAgent } from './narrative-agent';
 // Utilitários para logging e monitoramento
 export const AgentLogger = {
     logAgentCall: (agentName, method, duration) => {

@@ -1,137 +1,152 @@
 [
  {
   "Turma": "Assistente Administrativo",
-  "C. H.": 160
+  "C. H.": 160,
+  "eixo": "Gestão"
  },
  {
   "Turma": "Assistente Financeiro",
-  "C. H.": 160
+  "C. H.": 160,
+  "eixo": "Gestão"
  },
  {
   "Turma": "Atendimento humanizado em serviços de saúde",
-  "C. H.": 24
+  "C. H.": 24,
+  "eixo": "Saúde"
  },
  {
   "Turma": "Barbeiro",
-  "C. H.": 172
+  "C. H.": 172,
+  "eixo": "Beleza"
  },
  {
   "Turma": "Básico de Depilação",
-  "C. H.": 40
+  "C. H.": 40,
+  "eixo": "Beleza"
  },
  {
   "Turma": "Básico de Depilação",
-  "C. H.": 40
+  "C. H.": 40,
+  "eixo": "Beleza"
  },
  {
   "Turma": "Costureiro",
-  "C. H.": 212
+  "C. H.": 212,
+  "eixo": "Modas"
  },
  {
   "Turma": "Cuidador de Idoso ",
-  "C. H.": 160
+  "C. H.": 160,
+  "eixo": "Saúde"
  },
  {
   "Turma": "Instrumentação Cirurgica",
-  "C. H.": 40
+  "C. H.": 40,
+  "eixo": "Saúde"
  },
  {
   "Turma": "Introdução à Fotografia Digital",
-  "C. H.": 30
+  "C. H.": 30,
+  "eixo": "Artes"
  },
  {
   "Turma": "Modelagem e Costura Para Iniciantes",
-  "C. H.": 60
+  "C. H.": 60,
+  "eixo": "Modas"
  },
  {
   "Turma": "Oratória: comunicação e técnicas de apresentação",
-  "C. H.": 20
+  "C. H.": 20,
+  "eixo": "Comunicação"
  },
  {
   "Turma": "Oratória: comunicação e técnicas de apresentação",
-  "C. H.": 20
+  "C. H.": 20,
+  "eixo": "Comunicação"
  },
  {
   "Turma": "Oratória Avançada",
-  "C. H.": 30
+  "C. H.": 30,
+  "eixo": "Comunicação"
  },
  {
   "Turma": "Oratória Avançada",
-  "C. H.": 30
+  "C. H.": 30,
+  "eixo": "Comunicação"
  },
  {
   "Turma": "Penteados Estilizados",
-  "C. H.": 20
+  "C. H.": 20,
+  "eixo": "Beleza"
  },
  {
   "Turma": "Tendências em Automaquiagem",
-  "C. H.": 15
+  "C. H.": 15,
+  "eixo": "Beleza"
  },
  {
   "Turma": "Administrador de Banco de Dados",
-  "C. H.": 200
+  "C. H.": 200,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Assistente de Tecnologias da Informação",
-  "C. H.": 200
+  "C. H.": 200,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Autocad: Projetos 2d",
-  "C. H.": 60
+  "C. H.": 60,
+  "eixo": "Design"
  },
  {
   "Turma": "Autodesk Revit",
-  "C. H.": 40
+  "C. H.": 40,
+  "eixo": "Design"
  },
  {
   "Turma": "Business Intelligence com Power bi",
-  "C. H.": 40
- },
- {
-  "C. H.": 40
+  "C. H.": 40,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Criação de Conteúdo para Redes Sociais com Inteligência Artificial: Fotografia, Vídeo e Texto",
-  "C. H.": 20
+  "C. H.": 20,
+  "eixo": "Comunicação"
  },
  {
   "Turma": "Excel Avançado",
-  "C. H.": 60
- },
- {
-  "C. H.": 60
- },
- {
-  "C. H.": 60
+  "C. H.": 60,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Ferramentas Adobe para Design",
-  "C. H.": 144
+  "C. H.": 144,
+  "eixo": "Design"
  },
  {
   "Turma": "Formação - Programação em Python",
-  "C. H.": 156
+  "C. H.": 156,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Introdução à Informática \nWindows e Office\n(Windows, Word, Excel e Power Point)",
-  "C. H.": 80
- },
- {
-  "C. H.": 80
- },
- {
-  "C. H.": 80
+  "C. H.": 80,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Produtividade com Chatgpt",
-  "C. H.": 20
+  "C. H.": 20,
+  "eixo": "Tecnologia da Informação"
  },
  {
   "Turma": "Hambúrguer Artesanal",
-  "C. H.": 15
+  "C. H.": 15,
+  "eixo": "Gastronomia"
  },
  {
   "Turma": "Métodos de preparo de cafés",
-  "C. H.": 36
+  "C. H.": 36,
+  "eixo": "Gastronomia"
  }
 ]

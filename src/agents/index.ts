@@ -52,7 +52,7 @@ export class VocationalOrchestrator {
       // 1. Análise vocacional
       console.log('🔍 Iniciando análise vocacional...');
       const { analysisAgent } = await import('./analysis-agent');
-      const analysis = await analysisAgent.analyzeVocationalProfile(userRequest);
+      const analysis = await analysisAgent.analyzeVocationalProfileDeterministic(userRequest);
 
       // 2. Recomendação de cursos
       console.log('📚 Gerando recomendações de cursos...');
@@ -96,7 +96,7 @@ export class VocationalOrchestrator {
   async executeAnalysisOnly(userRequest: any): Promise<AgentResponse> {
     try {
       const { analysisAgent } = await import('./analysis-agent');
-      const analysis = await analysisAgent.analyzeVocationalProfile(userRequest);
+      const analysis = await analysisAgent.analyzeVocationalProfileDeterministic(userRequest);
 
       return {
         success: true,

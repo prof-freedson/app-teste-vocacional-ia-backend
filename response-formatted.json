@@ -1,0 +1,186 @@
+﻿{
+    "success":  true,
+    "data":  {
+                 "userId":  "João Silva",
+                 "sessionId":  "session_1759610422301_riu6ycuiq",
+                 "currentStep":  "completed",
+                 "data":  {
+                              "analysis":  {
+                                               "perfil_vocacional":  {
+                                                                         "tipo_personalidade":  "Colaborativo",
+                                                                         "areas_afinidade":  [
+                                                                                                 "tecnologia_informacao",
+                                                                                                 "administracao",
+                                                                                                 "educacao"
+                                                                                             ],
+                                                                         "habilidades_principais":  [
+                                                                                                        "Programação",
+                                                                                                        "Análise de Dados",
+                                                                                                        "Trabalho em Equipe"
+                                                                                                    ],
+                                                                         "valores_profissionais":  [
+                                                                                                       "Crescimento Profissional",
+                                                                                                       "Inovação",
+                                                                                                       "Colaboração"
+                                                                                                   ],
+                                                                         "estilo_trabalho":  "Trabalho em equipe, com foco em projetos colaborativos"
+                                                                     },
+                                               "compatibilidade_areas":  {
+                                                                             "administracao":  70,
+                                                                             "saude":  20,
+                                                                             "beleza_estetica":  10,
+                                                                             "moda_vestuario":  10,
+                                                                             "fotografia":  30,
+                                                                             "tecnologia_informacao":  90,
+                                                                             "gastronomia":  10,
+                                                                             "turismo_hospitalidade":  20,
+                                                                             "educacao":  60,
+                                                                             "servicos":  30
+                                                                         },
+                                               "recomendacoes_carreira":  [
+                                                                              {
+                                                                                  "area":  "Tecnologia da Informação",
+                                                                                  "profissoes":  [
+                                                                                                     "Desenvolvedor de Software",
+                                                                                                     "Analista de Dados",
+                                                                                                     "Especialista em Segurança da Informação"
+                                                                                                 ],
+                                                                                  "justificativa":  "João possui habilidades em programação e análise de dados, além de experiência em desenvolvimento web, o que o torna altamente compatível com carreiras na área de TI.",
+                                                                                  "compatibilidade":  90
+                                                                              },
+                                                                              {
+                                                                                  "area":  "Educação",
+                                                                                  "profissoes":  [
+                                                                                                     "Instrutor de TI",
+                                                                                                     "Professor de Programação"
+                                                                                                 ],
+                                                                                  "justificativa":  "Com seu perfil colaborativo, João pode se destacar em funções que envolvem ensinar e compartilhar conhecimento na área de tecnologia.",
+                                                                                  "compatibilidade":  60
+                                                                              }
+                                                                          ],
+                                               "pontos_fortes":  [
+                                                                     "Habilidade em Programação",
+                                                                     "Experiência em Desenvolvimento Web",
+                                                                     "Capacidade de Trabalhar em Equipe"
+                                                                 ],
+                                               "areas_desenvolvimento":  [
+                                                                             "Aperfeiçoamento em Análise de Dados",
+                                                                             "Desenvolvimento de Soft Skills"
+                                                                         ],
+                                               "confianca_analise":  85
+                                           },
+                              "courses":  {
+                                              "trilhas_recomendadas":  [
+                                                                           {
+                                                                               "area":  "Tecnologia da Informação",
+                                                                               "compatibilidade":  90,
+                                                                               "cursos":  [
+                                                                                              {
+                                                                                                  "nome":  "Administrador de Banco de Dados",
+                                                                                                  "tipo":  "qualificacao",
+                                                                                                  "duracao":  "200h",
+                                                                                                  "nivel":  "basico",
+                                                                                                  "justificativa":  "Curso específico do Senac Maranhão na área de Tecnologia da Informação, adequado ao seu perfil e interesse",
+                                                                                                  "beneficios":  [
+                                                                                                                     "Certificação reconhecida pelo mercado",
+                                                                                                                     "Metodologia prática e atualizada",
+                                                                                                                     "Oportunidades de networking"
+                                                                                                                 ],
+                                                                                                  "oportunidades":  [
+                                                                                                                        "Mercado de trabalho em expansão",
+                                                                                                                        "Possibilidade de empreendedorismo",
+                                                                                                                        "Crescimento profissional"
+                                                                                                                    ],
+                                                                                                  "programacao_atual":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "nome":  "Assistente de Tecnologias da Informação",
+                                                                                                  "tipo":  "qualificacao",
+                                                                                                  "duracao":  "200h",
+                                                                                                  "nivel":  "basico",
+                                                                                                  "justificativa":  "Curso específico do Senac Maranhão na área de Tecnologia da Informação, adequado ao seu perfil e interesse",
+                                                                                                  "beneficios":  [
+                                                                                                                     "Certificação reconhecida pelo mercado",
+                                                                                                                     "Metodologia prática e atualizada",
+                                                                                                                     "Oportunidades de networking"
+                                                                                                                 ],
+                                                                                                  "oportunidades":  [
+                                                                                                                        "Mercado de trabalho em expansão",
+                                                                                                                        "Possibilidade de empreendedorismo",
+                                                                                                                        "Crescimento profissional"
+                                                                                                                    ],
+                                                                                                  "programacao_atual":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "nome":  "Business Intelligence com Power bi",
+                                                                                                  "tipo":  "qualificacao",
+                                                                                                  "duracao":  "40h",
+                                                                                                  "nivel":  "basico",
+                                                                                                  "justificativa":  "Curso específico do Senac Maranhão na área de Tecnologia da Informação, adequado ao seu perfil e interesse",
+                                                                                                  "beneficios":  [
+                                                                                                                     "Certificação reconhecida pelo mercado",
+                                                                                                                     "Metodologia prática e atualizada",
+                                                                                                                     "Oportunidades de networking"
+                                                                                                                 ],
+                                                                                                  "oportunidades":  [
+                                                                                                                        "Mercado de trabalho em expansão",
+                                                                                                                        "Possibilidade de empreendedorismo",
+                                                                                                                        "Crescimento profissional"
+                                                                                                                    ],
+                                                                                                  "programacao_atual":  true
+                                                                                              }
+                                                                                          ]
+                                                                           },
+                                                                           {
+                                                                               "area":  "Educação",
+                                                                               "compatibilidade":  60,
+                                                                               "cursos":  [
+                                                                                              {
+                                                                                                  "nome":  "Oratória: comunicação e técnicas de apresentação",
+                                                                                                  "tipo":  "livre",
+                                                                                                  "duracao":  "20h",
+                                                                                                  "nivel":  "basico",
+                                                                                                  "justificativa":  "Este curso ajudará João a desenvolver suas habilidades de comunicação, fundamentais para quem deseja atuar como instrutor ou professor na área de tecnologia.",
+                                                                                                  "beneficios":  [
+                                                                                                                     "Melhoria na comunicação verbal",
+                                                                                                                     "Preparação para apresentações e aulas"
+                                                                                                                 ],
+                                                                                                  "oportunidades":  [
+                                                                                                                        "Instrutor de TI",
+                                                                                                                        "Professor de Programação"
+                                                                                                                    ],
+                                                                                                  "programacao_atual":  true
+                                                                                              }
+                                                                                          ]
+                                                                           }
+                                                                       ],
+                                              "observacoes":  "Recomendações baseadas nos cursos específicos do Senac Maranhão disponíveis na área de Tecnologia da Informação."
+                                          },
+                              "personalizedNarrative":  "Seus Resultados Estão Prontos!\nOlá João Silva! Descubra sua vocação e os cursos ideais para você\n\nAnálise Vocacional Personalizada\nAnálise Vocacional de João Silva\nOlá, João Silva! Estou animado para ajudar você a trilhar o caminho em direção a uma carreira gratificante na área de Tecnologia da Informação. Vamos explorar seu perfil e como você pode avançar em sua jornada profissional.\n\nPerfil Vocacional\nIdade: 25 anos\nEscolaridade: Ensino Médio\nÁrea de Interesse Principal: Tecnologia da Informação\nHabilidades Destacadas: Programação, análise de dados\nPersonalidade Profissional: colaborativo\nExperiência Prévia: 2 anos em desenvolvimento web\nObjetivos Profissionais: Crescer na área de tecnologia\nDisponibilidade para Estudos: matutino\n\nJoão Silva, seu perfil demonstra um forte potencial para se destacar na área de Tecnologia da Informação. Sua habilidade em programação e análise de dados, aliada à sua personalidade colaborativa, faz de você um candidato ideal para trabalhar em equipe e desenvolver projetos inovadores. Com 2 anos de experiência em desenvolvimento web, você já possui uma base sólida para expandir seus conhecimentos e conquistar novas oportunidades.\n\nÁreas de Afinidade\nCom base nas suas respostas, podemos identificar algumas áreas de afinidade dentro da Tecnologia da Informação:\n\n- Administrador de Banco de Dados\n- Assistente de Tecnologias da Informação\n- Business Intelligence com Power BI\n- Oratória: comunicação e técnicas de apresentação\n\nLembre-se, João Silva, suas características colaborativas e habilidades técnicas são grandes aliados na sua jornada. Acredite em seu potencial e siga em frente!",
+                              "whatsappMessage":  {
+                                                      "mensagem":  "Olá! Meu nome é Maria Oliveira e fiz o Teste Vocacional do Senac Maranhão na Expoindustria 2025.\n\nBaseado no meu perfil, o teste indicou que tenho afinidade com os seguintes cursos:\n\n• Administrador de Banco de Dados\n• Assistente de Tecnologias da Informação\n• Business Intelligence com Power bi\n\nGostaria de receber mais informações sobre esses cursos e as próximas turmas disponíveis.\n\nObrigado(a)!",
+                                                      "caracteres":  400,
+                                                      "preview":  "Olá! Meu nome é Maria Oliveira e fiz o Teste Vocacional do Senac Maranhão na Expoindustria 2025.\n\nBa",
+                                                      "elementos_visuais":  {
+                                                                                "emojis_usados":  [
+
+                                                                                                  ],
+                                                                                "formatacao":  [
+
+                                                                                               ],
+                                                                                "quebras_linha":  10
+                                                                            },
+                                                      "call_to_action":  "Solicitar informações sobre cursos",
+                                                      "alternativas":  [
+
+                                                                       ]
+                                                  }
+                          },
+                 "createdAt":  "2025-10-04T20:40:47.408Z",
+                 "updatedAt":  "2025-10-04T20:40:47.408Z"
+             },
+    "metadata":  {
+                     "agent":  "orchestrator",
+                     "timestamp":  "2025-10-04T20:40:47.409Z"
+                 }
+}

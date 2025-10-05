@@ -25,6 +25,7 @@ export interface VocationalWorkflow {
         responses?: any;
         analysis?: any;
         courses?: any;
+        personalizedNarrative?: any;
         whatsappMessage?: any;
     };
     createdAt: string;
@@ -58,6 +59,7 @@ export declare class VocationalOrchestrator {
     private generateSessionId;
 }
 export declare const vocationalOrchestrator: VocationalOrchestrator;
+export { NarrativeAgent, narrativeAgent } from './narrative-agent';
 export declare const AgentLogger: {
     logAgentCall: (agentName: string, method: string, duration: number) => void;
     logError: (agentName: string, method: string, error: any) => void;

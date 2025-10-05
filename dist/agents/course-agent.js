@@ -166,35 +166,12 @@ export class CourseAgent {
     `;
     }
     /**
-     * Agrupa cursos atuais por área estimada baseada no nome
+     * Agrupa cursos atuais por eixo baseado no campo eixo do JSON
      */
     groupCurrentCoursesByArea(courses) {
         const grouped = {};
         courses.forEach(course => {
-            const courseName = course.Turma.toLowerCase();
-            let area = "Outros";
-            // Classificação por palavras-chave no nome do curso
-            if (courseName.includes("administrativo") || courseName.includes("financeiro")) {
-                area = "Gestão e Negócios";
-            }
-            else if (courseName.includes("saúde") || courseName.includes("cuidador") || courseName.includes("cirurg")) {
-                area = "Saúde";
-            }
-            else if (courseName.includes("barbeiro") || courseName.includes("depilação") || courseName.includes("maquiagem") || courseName.includes("penteado")) {
-                area = "Beleza e Estética";
-            }
-            else if (courseName.includes("costur") || courseName.includes("modelagem")) {
-                area = "Moda";
-            }
-            else if (courseName.includes("fotografia") || courseName.includes("oratória")) {
-                area = "Comunicação";
-            }
-            else if (courseName.includes("banco de dados") || courseName.includes("tecnologia") || courseName.includes("autocad") || courseName.includes("revit") || courseName.includes("power bi") || courseName.includes("excel") || courseName.includes("adobe") || courseName.includes("python") || courseName.includes("informática") || courseName.includes("chatgpt") || courseName.includes("redes sociais") || courseName.includes("inteligência artificial")) {
-                area = "Tecnologia da Informação";
-            }
-            else if (courseName.includes("hambúrguer") || courseName.includes("café")) {
-                area = "Gastronomia";
-            }
+            const area = course.eixo || "Outros";
             if (!grouped[area]) {
                 grouped[area] = [];
             }
@@ -232,7 +209,11 @@ export class CourseAgent {
             if (jsonMatch && jsonMatch[1]) {
                 jsonContent = jsonMatch[1];
             }
-            return JSON.parse(jsonContent);
+            const result = JSON.parse(jsonContent);
+            // Filtrar e priorizar cursos específicos do Senac baseados no eixo
+            const currentProgramCourses = await this.loadCurrentProgramCourses();
+            const filteredResult = this.filterCoursesByEixo(result, currentProgramCourses, userRequest.area_interesse);
+            return filteredResult;
         }
         catch (error) {
             console.error('❌ [CourseAgent] Erro ao parsear JSON:', error);
@@ -436,6 +417,65 @@ export class CourseAgent {
             console.warn("Arquivo de diretrizes não encontrado");
             return "";
         }
+    }
+    /**
+     * Filtra e prioriza cursos específicos do Senac baseados no eixo
+     */
+    filterCoursesByEixo(result, currentProgramCourses, areaInteresse) {
+        // Mapear área de interesse para eixo
+        const areaToEixoMap = {
+            "tecnologia": "Tecnologia da Informação",
+            "saude": "Saúde",
+            "educacao": "Educacional",
+            "negocios": "Gestão",
+            "arte_design": "Design",
+            "gastronomia": "Gastronomia",
+            "beleza_estetica": "Beleza",
+            "turismo_hospitalidade": "Turismo",
+            "industria": "Produção de alimentos",
+            "servicos": "Gestão"
+        };
+        const eixoAlvo = areaToEixoMap[areaInteresse] || "Gestão";
+        // Filtrar cursos do eixo específico
+        const cursosDoEixo = currentProgramCourses.filter(curso => curso.eixo === eixoAlvo);
+        console.log(`🎯 [CourseAgent] Área: ${areaInteresse} -> Eixo: ${eixoAlvo}`);
+        console.log(`📚 [CourseAgent] Cursos encontrados no eixo: ${cursosDoEixo.length}`);
+        console.log(`📋 [CourseAgent] Cursos: ${cursosDoEixo.map(c => c.Turma).join(', ')}`);
+        // Se encontrou cursos específicos do eixo, substituir as recomendações
+        if (cursosDoEixo.length > 0) {
+            const cursosRecomendados = cursosDoEixo.slice(0, 3).map(curso => ({
+                nome: curso.Turma,
+                tipo: "qualificacao",
+                duracao: `${curso["C. H."]}h`,
+                nivel: "basico",
+                justificativa: `Curso específico do Senac Maranhão na área de ${eixoAlvo}, adequado ao seu perfil e interesse`,
+                beneficios: [
+                    "Certificação reconhecida pelo mercado",
+                    "Metodologia prática e atualizada",
+                    "Oportunidades de networking"
+                ],
+                oportunidades: [
+                    "Mercado de trabalho em expansão",
+                    "Possibilidade de empreendedorismo",
+                    "Crescimento profissional"
+                ],
+                programacao_atual: true
+            }));
+            // Atualizar o resultado com os cursos específicos
+            if (result.trilhas_recomendadas && result.trilhas_recomendadas.length > 0) {
+                result.trilhas_recomendadas[0].cursos = cursosRecomendados;
+                result.trilhas_recomendadas[0].area = eixoAlvo;
+            }
+            else {
+                result.trilhas_recomendadas = [{
+                        area: eixoAlvo,
+                        compatibilidade: 95,
+                        cursos: cursosRecomendados
+                    }];
+            }
+            result.observacoes = `Recomendações baseadas nos cursos específicos do Senac Maranhão disponíveis na área de ${eixoAlvo}.`;
+        }
+        return result;
     }
 }
 export const courseAgent = new CourseAgent();

@@ -25,6 +25,7 @@ export async function* generateVocationalAnalysis(input) {
         const result = {
             analise_vocacional: workflow.data.analysis,
             cursos_recomendados: workflow.data.courses,
+            narrativa_personalizada: workflow.data.personalizedNarrative,
             mensagem_whatsapp: workflow.data.whatsappMessage,
             metadata: {
                 sessionId: workflow.sessionId,
